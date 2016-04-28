@@ -1,0 +1,26 @@
+{
+  "name": "bugzilla-readable-status",
+  "version": "1.0.0",
+  "description": "Given the properties of a bug in bugzilla.mozilla.org, generate an english language readable status message.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emceeaich/bugzilla-readable-status.git"
+  },
+  "keywords": [
+    "bugzilla",
+    "mozilla",
+    "bugzilla.mozilla.org",
+    "qa",
+    "triage"
+  ],
+  "author": "Emma Humphries",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/emceeaich/bugzilla-readable-status/issues"
+  },
+  "homepage": "https://github.com/emceeaich/bugzilla-readable-status#readme"
+}

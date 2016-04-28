@@ -1,7 +1,21 @@
 console.log('in index.js');
 
-var parse = function() {
-    return 'parsed bug';
+var parse = function(bug) {
+    readable = '';
+
+    if (bug.status) {
+        readable = bug.status.toUpperCase() + ' bug';
+    }
+
+    if (bug.triage && bug.triage.toLowerCase() === 'untriaged') {
+        readable = 'UNTRIAGED ' + readable;
+    }
+
+    if (readable === '') {
+        return { error: 'NO_STRING_FOR_BUG' };
+    }
+
+    return readable;
 }
 
 exports.readable = function(args) {
@@ -12,11 +26,11 @@ exports.readable = function(args) {
 
     if (Array.isArray(args)) {
         var result = { result: [] };
-        args.forEach(function() {
-            result.result.push(parse());
+        args.forEach(function(bug) {
+            result.result.push(parse(bug));
         });
         return result;
     }
 
-    return parse(); 
+    return parse(args); 
 };

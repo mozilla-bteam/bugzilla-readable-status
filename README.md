@@ -11,8 +11,8 @@ The module exposes a single method, `readable,` which can be called in a variety
 
 ## Usage
 
-'''
-var readable = import('readable-bugzilla-status').readable;
+```
+var readable = import('bugzilla-readable-status').readable;
 
 var status = readable({ bugid: NNNNNN, status: 'NEW', … });
 
@@ -33,15 +33,15 @@ var statuses = readable([
 var emptyArray = readable([]);
 
 // => { "result": [] }
-'''
+```
 
 ## Errors
 
 Errors are returned as objects:
 
-'''
+```
 { "error": "ERROR STRING" }
-'''
+```
 
 ### No Data
 
@@ -51,7 +51,7 @@ If there are no usable properties or the module can't generate, "NO_STRING_FOR_B
 
 If multiple bugs are requested, and errors are found, the errors are included in the reponse object:
 
-'''
+```
 { "result": [
         { "bugid": "BUG ID", 
           "status": "BUG STATUS" },
@@ -60,5 +60,5 @@ If multiple bugs are requested, and errors are found, the errors are included in
           "error": "ERROR MESSAGE" }
         …
     ]}
-'''
+```
 

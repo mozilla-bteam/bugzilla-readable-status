@@ -9,13 +9,15 @@ describe('Signatures', function() {
     });
     describe('Array', function() {
         it('If called with an array, should return an array of results', function() {
-            var result = readable([{}, {}, {}]);
-            result.result.length.should.equal(3);
+            var result = readable([{ bugid: 12345, status: 'NEW' }, 
+                                   { bugid: 67890, status: 'FIXED' }, 
+                                   { bugid: 55555, status: 'RESOLVED' }]);
+            result.statuses.length.should.equal(3);
         });
     });
     describe('Object', function() {
         it('If called with something else, should return a string', function() {
-            readable({status: 'murble'}).should.equal('MURBLE bug');
+            readable({bugid: 12345, status: 'murble'}).should.equal('MURBLE bug');
         });
     });
     describe('Missing', function() {
@@ -28,12 +30,12 @@ describe('Signatures', function() {
 describe('Parsing', function() {
     describe('Status', function() {
         it('Should return a sentence based on the bug\'s status', function() {
-            readable({status: 'tweaked'}).should.equal('TWEAKED bug');
+            readable({bugid: 67890, status: 'tweaked'}).should.equal('TWEAKED bug');
         });
     });
     describe('Triage', function() {
         it('Should start with \'untriaged\' if bug is untriaged', function() {
-            readable({status: 'weird', triage: 'UNTRIAGED'}).should.equal('UNTRIAGED WEIRD bug');
+            readable({bugid: 12345, status: 'weird', triage: 'UNTRIAGED'}).should.equal('UNTRIAGED WEIRD bug');
         });
     });
 });

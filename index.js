@@ -1,18 +1,20 @@
-console.log('in index.js');
+var set_error = function(message) {
+    return { error: message };
+}
 
 var parse = function(bug) {
-    readable = '';
+ 
+    var readable = '';
 
-    if (bug.status) {
-        readable = bug.status.toUpperCase() + ' bug';
+    if (typeof bug.bugid === 'undefined' ||
+        typeof bug.status === 'undefined') {
+        return set_error('NO_STRING_FOR_BUG');
     }
+
+    readable = bug.status.toUpperCase() + ' bug';
 
     if (bug.triage && bug.triage.toLowerCase() === 'untriaged') {
         readable = 'UNTRIAGED ' + readable;
-    }
-
-    if (readable === '') {
-        return { error: 'NO_STRING_FOR_BUG' };
     }
 
     return readable;
@@ -21,15 +23,26 @@ var parse = function(bug) {
 exports.readable = function(args) {
 
     if (args === undefined) {
-        return {'error': 'NO_BUG_INFO'};
+        return set_error('NO_BUG_INFO');
     }
 
     if (Array.isArray(args)) {
-        var result = { result: [] };
+        var results = { statuses: [] };
         args.forEach(function(bug) {
-            result.result.push(parse(bug));
+            var status = {};
+            var result = parse(bug);
+
+            if (typeof result.error !== 'undefined') {
+                status.error = result.error;
+            }
+            else {
+                status.status = result;
+            }
+            status.bugid = bug.bugid;
+            
+            results.statuses.push(status);
         });
-        return result;
+        return results;
     }
 
     return parse(args); 

@@ -24,7 +24,7 @@ var statuses = readable([
         …
     ]);
 
-// => { "result": [
+// => { "statuses": [
         { "bugid": NNNNNN, "status": "BUG STATUS" },
         { "bugid": MMMMMM, "status": "BUG STATUS" },
         …
@@ -52,7 +52,7 @@ If there are no usable properties or the module can't generate, "NO_STRING_FOR_B
 If multiple bugs are requested, and errors are found, the errors are included in the reponse object:
 
 ```
-{ "result": [
+{ "statuses": [
         { "bugid": "BUG ID", 
           "status": "BUG STATUS" },
         …

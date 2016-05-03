@@ -45,6 +45,12 @@ Bug.prototype.parse = function() {
         readable += ' which is tracked for Firefox ' + firstTracked;
     }
 
+    // do you know if there's an open needinfo 
+
+    if (this.hasNeedInfo()) {
+        readable += ' awaiting an answer on a request for information';
+    }
+
     return readable;
 }
 

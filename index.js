@@ -55,7 +55,7 @@ Bug.prototype.hasFlag = function(name, status) {
 };
 
 Bug.prototype.hasNeedInfo = function(bug) {
-    return this.hasFlag('needinfo', '?');
+    return this.hasFlag('needinfo');
 };
 
 Bug.prototype.getFlags = function(flag) {
@@ -66,7 +66,7 @@ Bug.prototype.getFlags = function(flag) {
     });
 
     return flags.sort();
-}
+};
 
 Bug.prototype.getAffectedReleases = function() {
     if (typeof this.statusFlags === 'undefined') {

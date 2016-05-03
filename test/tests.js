@@ -58,4 +58,16 @@ describe('Tracking', function() {
         readable({bugid: 12345, status: 'bewildering', cf_tracking_firefox22: '+', cf_tracking_firefox23: '?',
             cf_tracking_firefox21: '-'}).should.equal('BEWILDERING bug which is tracked for Firefox 22');
     });
+
+    it('Should report the earliest version a bug is being release tracked for', function() {
+        readable({bugid: 12345, status: 'bewildering', cf_tracking_firefox22: '+', cf_tracking_firefox23: '+',
+            cf_tracking_firefox21: '-'}).should.equal('BEWILDERING bug which is tracked for Firefox 22');
+    });
+});
+
+describe('Need Info', function() {
+    it('Should report if a bug has an open need info', function() {
+        readable({bugid: 12345, status: 'obvious', flags: [ { name: 'needinfo' } ]}).
+            should.equal('OBVIOUS bug awaiting an answer on a request for information');
+    });
 });

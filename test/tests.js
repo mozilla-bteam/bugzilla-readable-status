@@ -35,7 +35,20 @@ describe('Parsing', function() {
     });
     describe('Triage', function() {
         it('Should start with \'untriaged\' if bug is untriaged', function() {
-            readable({bugid: 12345, status: 'weird', triage: 'UNTRIAGED'}).should.equal('UNTRIAGED WEIRD bug');
+            readable({bugid: 12345, status: 'weird', triage: 'UNTRIAGED'}).
+                should.equal('UNTRIAGED WEIRD bug');
         });
+    });
+});
+
+describe('Found in', function() {
+    it('Should report if a bug has a status flag set', function() {
+        readable({bugid: 12345, status: 'disconcerting', triage: 'TRIAGED', cf_status_firefox88: 'affected'}).
+            should.equal('DISCONCERTING bug found in Firefox 88');
+    });
+
+    it ('Should report the earliest version the bug was found in', function() {
+        readable({bugid: 12345, status: 'horrible', triage: 'TRIAGED', cf_status_firefox91: 'affected',
+            cf_status_firefox92: 'affected'}).should.equal('HORRIBLE bug found in Firefox 91');
     });
 });

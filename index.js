@@ -37,6 +37,14 @@ Bug.prototype.parse = function() {
         readable += ' found in Firefox ' + firstAffected;
     }
 
+    // do you know if it's tracked for a release
+
+    firstTracked = this.firstTracked();
+
+    if (firstTracked) {
+        readable += ' which is tracked for Firefox ' + firstTracked;
+    }
+
     return readable;
 }
 
@@ -50,51 +58,73 @@ Bug.prototype.hasNeedInfo = function(bug) {
     return this.hasFlag('needinfo', '?');
 };
 
-Bug.prototype.getStatusFlags = function() {
+Bug.prototype.getFlags = function(flag) {
     var flags, keys = Object.keys(this.data);
 
     flags = keys.filter(function(key, i, arr) {
-        return (key.indexOf('cf_status_firefox') === 0);
+        return (key.indexOf(flag) === 0);
     });
 
     return flags.sort();
 }
 
-Bug.prototype.isTrackingARelease = function() {
-
+Bug.prototype.getAffectedReleases = function() {
     if (typeof this.statusFlags === 'undefined') {
-        this.statusFlags = this.getStatusFlags();
+        this.statusFlags = this.getFlags('cf_status_firefox');
     }
 
-    return this.statusFlags.some(function(flag, i, arr) {
+    return this.statusFlags.filter(function(flag, i, arr) {
         return (['affected'].indexOf(this.data[flag]) > -1);
     }, this);
 };
 
 Bug.prototype.firstAffected = function() {
+
+    var affected;
+
     if (typeof this.statusFlags === 'undefined') {
-        this.statusFlags = this.getStatusFlags();
+        this.statusFlags = this.getFlags('cf_status_firefox');
     }
 
-    if (this.statusFlags.length > 0) {
-        return this.statusFlags[0].split('cf_status_firefox')[1];
+    affected = this.getAffectedReleases();
+
+    if (affected.length > 0) {
+        return affected[0].split('cf_status_firefox')[1];
     }
     else {
         return '';
     }
 }
 
-/*
-Bug.prototype.isFlaggedForARelease = function() {
-    var keys = Object.keys(this.data);
-    var releaseFlags = keys.filter(function(key, i, arr) {
-        return (key.indexOf('cf_tracking_firefox') === 0);
-    });
-    return releaseFlags.some(function(flag, i, arr) {
+Bug.prototype.getTrackedReleases = function() {
+    if (typeof this.trackingFlags === 'undefined') {
+        this.trackingFlags = this.getFlags('cf_tracking_firefox');
+    }
+
+    return this.trackingFlags.filter(function(flag, i, arr) {
         return (['+'].indexOf(this.data[flag]) > -1);
     }, this);
 };
-*/
+
+Bug.prototype.firstTracked = function() {
+
+    var tracking;
+
+    if (typeof this.trackingFlags === 'undefined') {
+        this.trackingFlags = this.getFlags('cf_tracking_firefox');
+    }
+
+    tracking = this.getTrackedReleases();
+
+    if (tracking.length > 0) {
+        return tracking[0].split('cf_tracking_firefox')[1];
+    }
+    else {
+        return '';
+    }
+}
+
+// export the readable description function 
 
 exports.readable = function(args) {
 

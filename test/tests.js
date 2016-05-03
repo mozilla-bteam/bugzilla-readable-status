@@ -48,7 +48,14 @@ describe('Found in', function() {
     });
 
     it ('Should report the earliest version the bug was found in', function() {
-        readable({bugid: 12345, status: 'horrible', triage: 'TRIAGED', cf_status_firefox91: 'affected',
+        readable({bugid: 12345, status: 'horrible', triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
             cf_status_firefox92: 'affected'}).should.equal('HORRIBLE bug found in Firefox 91');
+    });
+});
+
+describe('Tracking', function() {
+    it('Should report if a bug is tracking a release', function() {
+        readable({bugid: 12345, status: 'bewildering', cf_tracking_firefox22: '+', cf_tracking_firefox23: '?',
+            cf_tracking_firefox21: '-'}).should.equal('BEWILDERING bug which is tracked for Firefox 22');
     });
 });

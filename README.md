@@ -9,24 +9,30 @@ The module exposes a single method, `readable,` which can be called in a variety
 * an array of objects containing bug properties
 * an array of bug ids (to be implemented)
 
+## Install
+
+Clone repo to local.
+
+`npm install; npm test; npm run demo`
+
 ## Usage
 
 ```
 var readable = import('bugzilla-readable-status').readable;
 
-var status = readable({ bugid: NNNNNN, status: 'NEW', … });
+var status = readable({ id: NNNNNN, status: 'NEW', … });
 
 // => 'BUG STATUS'
 
 var statuses = readable([
-        { bugid: NNNNNN, status: 'FIXED' … }.
-        { bugid: MMMMMM, status: 'NEW' … },
+        { id: NNNNNN, status: 'FIXED' … }.
+        { id: MMMMMM, status: 'NEW' … },
         …
     ]);
 
 // => { "statuses": [
-        { "bugid": NNNNNN, "status": "BUG STATUS" },
-        { "bugid": MMMMMM, "status": "BUG STATUS" },
+        { "id": NNNNNN, "status": "BUG STATUS" },
+        { "id": MMMMMM, "status": "BUG STATUS" },
         …
     ]}
 
@@ -53,10 +59,10 @@ If multiple bugs are requested, and errors are found, the errors are included in
 
 ```
 { "statuses": [
-        { "bugid": "BUG ID", 
+        { "id": "BUG ID", 
           "status": "BUG STATUS" },
         …
-        { "bugid": "BUG ID WITH ERROR",
+        { "id": "BUG ID WITH ERROR",
           "error": "ERROR MESSAGE" }
         …
     ]}

@@ -9,15 +9,15 @@ describe('Signatures', function() {
     });
     describe('Array', function() {
         it('If called with an array, should return an array of results', function() {
-            var result = readable([{ bugid: 12345, status: 'NEW' }, 
-                                   { bugid: 67890, status: 'FIXED' }, 
-                                   { bugid: 55555, status: 'RESOLVED' }]);
+            var result = readable([{ id: 12345, status: 'NEW' }, 
+                                   { id: 67890, status: 'FIXED' }, 
+                                   { id: 55555, status: 'RESOLVED' }]);
             result.statuses.length.should.equal(3);
         });
     });
     describe('Object', function() {
         it('If called with something else, should return a string', function() {
-            readable({bugid: 12345, status: 'murble'}).should.equal('MURBLE bug');
+            readable({id: 12345, status: 'murble'}).should.equal('MURBLE bug');
         });
     });
     describe('Missing', function() {
@@ -30,12 +30,12 @@ describe('Signatures', function() {
 describe('Parsing', function() {
     describe('Status', function() {
         it('Should return a sentence based on the bug\'s status', function() {
-            readable({bugid: 67890, status: 'tweaked'}).should.equal('TWEAKED bug');
+            readable({id: 67890, status: 'tweaked'}).should.equal('TWEAKED bug');
         });
     });
     describe('Triage', function() {
         it('Should start with \'untriaged\' if bug is untriaged', function() {
-            readable({bugid: 12345, status: 'weird', triage: 'UNTRIAGED'}).
+            readable({id: 12345, status: 'weird', triage: 'UNTRIAGED'}).
                 should.equal('UNTRIAGED WEIRD bug');
         });
     });
@@ -43,31 +43,31 @@ describe('Parsing', function() {
 
 describe('Found in', function() {
     it('Should report if a bug has a status flag set', function() {
-        readable({bugid: 12345, status: 'disconcerting', triage: 'TRIAGED', cf_status_firefox88: 'affected'}).
+        readable({id: 12345, status: 'disconcerting', triage: 'TRIAGED', cf_status_firefox88: 'affected'}).
             should.equal('DISCONCERTING bug found in Firefox 88');
     });
 
     it ('Should report the earliest version the bug was found in', function() {
-        readable({bugid: 12345, status: 'horrible', triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
+        readable({id: 12345, status: 'horrible', triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
             cf_status_firefox92: 'affected'}).should.equal('HORRIBLE bug found in Firefox 91');
     });
 });
 
 describe('Tracking', function() {
     it('Should report if a bug is tracking a release', function() {
-        readable({bugid: 12345, status: 'bewildering', cf_tracking_firefox22: '+', cf_tracking_firefox23: '?',
+        readable({id: 12345, status: 'bewildering', cf_tracking_firefox22: '+', cf_tracking_firefox23: '?',
             cf_tracking_firefox21: '-'}).should.equal('BEWILDERING bug which is tracked for Firefox 22');
     });
 
     it('Should report the earliest version a bug is being release tracked for', function() {
-        readable({bugid: 12345, status: 'bewildering', cf_tracking_firefox22: '+', cf_tracking_firefox23: '+',
+        readable({id: 12345, status: 'bewildering', cf_tracking_firefox22: '+', cf_tracking_firefox23: '+',
             cf_tracking_firefox21: '-'}).should.equal('BEWILDERING bug which is tracked for Firefox 22');
     });
 });
 
 describe('Need Info', function() {
     it('Should report if a bug has an open need info', function() {
-        readable({bugid: 12345, status: 'obvious', flags: [ { name: 'needinfo' } ]}).
+        readable({id: 12345, status: 'obvious', flags: [ { name: 'needinfo', status: '?' } ]}).
             should.equal('OBVIOUS bug awaiting an answer on a request for information');
     });
 });

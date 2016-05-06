@@ -14,7 +14,7 @@ Bug.prototype.parse = function() {
 
     // check for minimal data
 
-    if (typeof this.data.bugid === 'undefined' ||
+    if (typeof this.data.id === 'undefined' ||
         typeof this.data.status === 'undefined') {
         return set_error('NO_STRING_FOR_BUG');
     }
@@ -60,8 +60,8 @@ Bug.prototype.hasFlag = function(name, status) {
     }));
 };
 
-Bug.prototype.hasNeedInfo = function(bug) {
-    return this.hasFlag('needinfo');
+Bug.prototype.hasNeedInfo = function() {
+    return this.hasFlag('needinfo', '?');
 };
 
 Bug.prototype.getFlags = function(flag) {
@@ -151,7 +151,7 @@ exports.readable = function(args) {
             else {
                 status.status = result;
             }
-            status.bugid = bug.data.bugid;
+            status.id = bug.data.id;
             
             results.statuses.push(status);
         });

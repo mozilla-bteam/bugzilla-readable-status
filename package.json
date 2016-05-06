@@ -4,7 +4,8 @@
   "description": "Given the properties of a bug in bugzilla.mozilla.org, generate an english language readable status message.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "demo": "node test/fetch.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   "homepage": "https://github.com/emceeaich/bugzilla-readable-status#readme",
   "devDependencies": {
     "chai": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "node-fetch": "^1.5.2"
   }
 }

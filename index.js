@@ -11,18 +11,45 @@ Bug.prototype.parse = function() {
  
     var readable = '';
     var firstAffected = '';
+    var bugType = '';
 
     // check for minimal data
 
     if (typeof this.data.id === 'undefined' ||
-        typeof this.data.status === 'undefined') {
+        typeof this.data.status === 'undefined' ||
+        typeof this.data.resolution === 'undefined') {
         return set_error('NO_STRING_FOR_BUG');
+    }
+
+    // is regression?
+    
+    if (this.hasKeyword('regression')) {
+        bugType = 'regression bug';
+    }
+    else {
+        bugType = 'bug';   
     }
 
     // add bug status
 
-    readable = this.data.status.toUpperCase() + ' bug';
+    if (this.data.status.toUpperCase() === 'VERIFIED') {
+        return 'bug has been fixed and VERIFIED';
+    } else if (['CLOSED', 'RESOLVED'].indexOf(this.data.status.toUpperCase()) > -1) {
 
+        readable = bugType + ' ' + this.data.status.toUpperCase() + ' as ' + this.data.resolution; 
+
+        if (this.data.resolution.toUpperCase() === 'DUPLICATE') {
+            readable +=  ' of ' + this.data.dupe_of;
+            return readable;
+        }
+        else if (this.data.resolution.toUpperCase() != 'FIXED') {
+            return readable;
+        } 
+    }
+    else {
+        readable = this.data.status.toUpperCase() + ' ' + bugType;
+    }
+   
     // prefix if untriaged
 
     if (this.data.triage && this.data.triage.toLowerCase() === 'untriaged') {
@@ -44,6 +71,10 @@ Bug.prototype.parse = function() {
     if (firstTracked) {
         readable += ' which is tracked for Firefox ' + firstTracked;
     }
+    else if (this.data.resolution != 'FIXED') {
+        // otherwise see if there's a priority set for the bug
+        readable += this.getPriority();
+    }
 
     // do you know if there's an open needinfo 
 
@@ -53,6 +84,39 @@ Bug.prototype.parse = function() {
 
     return readable;
 }
+
+Bug.prototype.getPriority = function() {
+    var priority;
+
+    switch (this.data.priority) {
+        case '--':
+            priority = ' for which no priority has been set';
+            break;
+        case 'P1': 
+            priority = ' which should be worked on in the current release/iteration';
+            break;
+        case 'P2': 
+            priority = ' which should be worked on in the next release/iteration';
+            break;
+        case 'P3':
+            priority = ' which is a feature request';
+            break;
+        case 'P4':
+            priority = ' which is a long term backlog item';
+            break;
+        case 'P5':
+            priority = ' which will not be worked on by staff, but a patch will be accepted';
+            break;
+        default:
+            priority = '';
+    }
+
+    return priority;
+}
+
+Bug.prototype.hasKeyword = function(keyword) {
+    return (this.data.keywords && this.data.keywords.indexOf(keyword) > -1);
+};
 
 Bug.prototype.hasFlag = function(name, status) {
     return (this.data.flags && this.data.flags.some(function(flag, i, arry) {

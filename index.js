@@ -1,3 +1,5 @@
+// Generate a readable status message from a bug or list of bugs 
+
 var set_error = function(message) {
     return { error: message };
 }

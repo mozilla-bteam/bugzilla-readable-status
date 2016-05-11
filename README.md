@@ -49,9 +49,13 @@ Errors are returned as objects:
 { "error": "ERROR STRING" }
 ```
 
+### Unable to Parse
+
+If there's an unrecoverable error while trying to parse a bug, return `CANNOT_PARSE_BUG`.
+
 ### No Data
 
-If there are no usable properties or the module can't generate, "NO_STRING_FOR_BUG"
+If there are no usable properties or the module can't generate, `NO_STRING_FOR_BUG`
 
 ### Errors in Requests for Multiple Bugs 
 

@@ -9,8 +9,17 @@ var Bug = function(data) {
     return this;
 }
 
+// wrapper for the parse function so that we always trap errors
 Bug.prototype.parse = function() {
- 
+    try {
+        return this._parse();
+    }
+    catch(e) {
+        return set_error('CANNOT_PARSE_BUG');
+    }
+};
+
+Bug.prototype._parse = function() { 
     var readable = '';
     var firstAffected = '';
     var bugType = '';

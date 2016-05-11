@@ -46,8 +46,9 @@ describe('Statuses', function() {
     describe('Verified', function() {
         it('Should describe verified bugs as just being fixed', function() {
             readable({id: 12345, status: 'VERIFIED', resolution: 'aslfjsalfj', triage: 'TRIAGED', 
+                target_milestone: 'mozilla89',
                 cf_tracking_firefox88: '+', cf_status_firefox87: 'affected'})
-                .should.equal('bug has been fixed and VERIFIED');
+                .should.equal('bug has been fixed and VERIFIED for Firefox 89 found in Firefox 87 which is tracked for Firefox 88');
         });
     });
 
@@ -126,10 +127,23 @@ describe('Tracking', function() {
     });
 });
 
+describe('Release version', function() {
+    it('Should report the release version if fixed', function() {
+        readable({id: 12345, status: 'RESOLVED', resolution: 'FIXED',
+            target_milestone: 'mozilla101'}).should.equal('bug RESOLVED as FIXED for Firefox 101');
+    });
+    
+    it ('Should report any uplifts besides the release version', function() {
+        readable({id: 12345, status: 'RESOLVED', resolution: 'FIXED',
+            target_milestone: 'mozilla101', cf_tracking_firefox100: '+'})
+            .should.equal('bug RESOLVED as FIXED for Firefox 101 which is tracked for Firefox 100');
+    });
+});
+
 describe('Need Info', function() {
     it('Should report if a bug has an open need info', function() {
         readable({id: 12345, status: 'obvious', resolution: '---',
-            flags: [ { name: 'needinfo', status: '?' } ]})
-            .should.equal('OBVIOUS bug awaiting an answer on a request for information');
+            flags: [ { name: 'needinfo', status: '?' } ]}).
+            should.equal('OBVIOUS bug awaiting an answer on a request for information');
     });
 });

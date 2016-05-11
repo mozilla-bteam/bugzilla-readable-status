@@ -14,6 +14,7 @@ Bug.prototype.parse = function() {
     var readable = '';
     var firstAffected = '';
     var bugType = '';
+    var targetMilestone;
 
     // check for minimal data
 
@@ -35,8 +36,14 @@ Bug.prototype.parse = function() {
     // add bug status
 
     if (this.data.status.toUpperCase() === 'VERIFIED') {
-        return 'bug has been fixed and VERIFIED';
-    } else if (['CLOSED', 'RESOLVED'].indexOf(this.data.status.toUpperCase()) > -1) {
+        readable = bugType + ' has been fixed and VERIFIED';
+
+        targetMilestone = this.getTargetMilestone();
+        if (targetMilestone) {
+            readable += ' for Firefox ' + targetMilestone;
+        }
+    } 
+    else if (['CLOSED', 'RESOLVED'].indexOf(this.data.status.toUpperCase()) > -1) {
 
         readable = bugType + ' ' + this.data.status.toUpperCase() + ' as ' + this.data.resolution; 
 
@@ -44,9 +51,15 @@ Bug.prototype.parse = function() {
             readable +=  ' of ' + this.data.dupe_of;
             return readable;
         }
-        else if (this.data.resolution.toUpperCase() != 'FIXED') {
-            return readable;
+        else if (this.data.resolution.toUpperCase() === 'FIXED') {
+            targetMilestone = this.getTargetMilestone();
+            if (targetMilestone) {
+                readable += ' for Firefox ' + targetMilestone;
+            }
         } 
+        else {
+            return readable;
+        }
     }
     else {
         readable = this.data.status.toUpperCase() + ' ' + bugType;
@@ -166,7 +179,18 @@ Bug.prototype.firstAffected = function() {
     else {
         return '';
     }
-}
+};
+
+Bug.prototype.getTargetMilestone = function() {
+    if (typeof this.data.target_milestone != 'undefined' &&
+        this.data.target_milestone != '---' &&
+        this.data.target_milestone.indexOf('mozilla') === 0) {
+            return this.data.target_milestone.slice(7);
+    }
+    else {
+        return '';
+    }
+};
 
 Bug.prototype.getTrackedReleases = function() {
     if (typeof this.trackingFlags === 'undefined') {

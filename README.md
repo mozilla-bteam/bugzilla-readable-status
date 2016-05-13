@@ -15,6 +15,22 @@ Clone repo to local.
 
 `npm install; npm test; npm run demo`
 
+### For browsers
+
+Install browserify
+
+`npm install -g browserify`
+
+Run the project's bundle script.
+
+`npm run bundle`
+
+And load the resulting file into your web page.
+
+```
+<script src="bugzilla-readable-status.js"></script>
+```
+
 ## Usage
 
 ```

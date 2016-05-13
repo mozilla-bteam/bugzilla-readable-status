@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "demo": "node test/fetch.js"
+    "bundle": "browserify index.js -o bugzilla-readable-status.js",
+    "demo": "node test/fetch.js",
+    "bundle-demo": "browserify test/fetch.js -o bugzilla-readable-status-browser-demo.js"
   },
   "repository": {
     "type": "git",

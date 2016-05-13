@@ -1,3 +1,5 @@
 *swp
 *tmp
 node_modules
+bugzilla-readable-status.js
+bugzilla-readable-status-browser-demo.js

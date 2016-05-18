@@ -152,7 +152,7 @@ Bug.prototype.hasNeedInfo = function() {
     return this.hasFlag('needinfo', '?');
 };
 
-Bug.prototype.getFlags = function(flag) {
+Bug.prototype.getFields = function(flag) {
     var flags, keys = Object.keys(this.data);
 
     flags = keys.filter(function(key, i, arr) {
@@ -164,7 +164,7 @@ Bug.prototype.getFlags = function(flag) {
 
 Bug.prototype.getAffectedReleases = function() {
     if (typeof this.statusFlags === 'undefined') {
-        this.statusFlags = this.getFlags('cf_status_firefox');
+        this.statusFlags = this.getFields('cf_status_firefox');
     }
 
     return this.statusFlags.filter(function(flag, i, arr) {
@@ -177,7 +177,7 @@ Bug.prototype.firstAffected = function() {
     var affected;
 
     if (typeof this.statusFlags === 'undefined') {
-        this.statusFlags = this.getFlags('cf_status_firefox');
+        this.statusFlags = this.getFields('cf_status_firefox');
     }
 
     affected = this.getAffectedReleases();
@@ -203,7 +203,7 @@ Bug.prototype.getTargetMilestone = function() {
 
 Bug.prototype.getTrackedReleases = function() {
     if (typeof this.trackingFlags === 'undefined') {
-        this.trackingFlags = this.getFlags('cf_tracking_firefox');
+        this.trackingFlags = this.getFields('cf_tracking_firefox');
     }
 
     return this.trackingFlags.filter(function(flag, i, arr) {
@@ -216,7 +216,7 @@ Bug.prototype.firstTracked = function() {
     var tracking;
 
     if (typeof this.trackingFlags === 'undefined') {
-        this.trackingFlags = this.getFlags('cf_tracking_firefox');
+        this.trackingFlags = this.getFields('cf_tracking_firefox');
     }
 
     tracking = this.getTrackedReleases();

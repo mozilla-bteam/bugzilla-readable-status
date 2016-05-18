@@ -111,6 +111,15 @@ describe('Found in', function() {
     });
 });
 
+describe('Priority', function() {
+    it ('Should report the earliest version the bug was found in', function() {
+        readable({id: 12345, status: 'horrible', resolution: '---',
+            triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
+            cf_status_firefox92: 'affected', priority: '--'})
+            .should.equal('HORRIBLE bug found in Firefox 91 with no priority');
+    });    
+});
+
 describe('Tracking', function() {
     it('Should report if a bug is tracking a release', function() {
         readable({id: 12345, status: 'bewildering', resolution: '---',

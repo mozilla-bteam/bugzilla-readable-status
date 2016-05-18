@@ -4,7 +4,7 @@
   "description": "Given the properties of a bug in bugzilla.mozilla.org, generate an english language readable status message.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec",
+    "test": "mocha --reporter spec",
     "bundle": "browserify index.js -o bugzilla-readable-status.js --standalone bugzilla-readable-status",
     "demo": "node test/fetch.js",
     "bundle-demo": "browserify test/fetch.js -o bugzilla-readable-status-browser-demo.js"
@@ -21,7 +21,7 @@
     "triage"
   ],
   "author": "Emma Humphries",
-  "license": "GPL-3.0",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/emceeaich/bugzilla-readable-status/issues"
   },
@@ -30,5 +30,11 @@
     "chai": "*",
     "mocha": "*",
     "node-fetch": "^1.5.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^3.5.0"
   }
 }

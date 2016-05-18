@@ -114,7 +114,7 @@ Bug.prototype.getPriority = function() {
 
     switch (this.data.priority) {
         case '--':
-            priority = ' for which no priority has been set';
+            priority = ' with no priority';
             break;
         case 'P1': 
             priority = ' which should be worked on in the current release/iteration';

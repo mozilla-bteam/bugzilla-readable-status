@@ -1,11 +1,12 @@
 {
   "name": "bugzilla-readable-status",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Given the properties of a bug in bugzilla.mozilla.org, generate an english language readable status message.",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec",
     "bundle": "browserify index.js -o bugzilla-readable-status.js --standalone bugzilla-readable-status",
+    "bundle-min": "browserify index.js -o bugzilla-readable-status-min.js --standalone bugzilla-readable-status -d -p [minifyify --map bugzilla-readable-status-min.js.map --output bugzilla-readable-status-min.js.map]",
     "demo": "node test/fetch.js",
     "bundle-demo": "browserify test/fetch.js -o bugzilla-readable-status-browser-demo.js"
   },
@@ -35,6 +36,7 @@
     "test": "test"
   },
   "dependencies": {
-    "chai": "^3.5.0"
+    "minifyify": "^7.3.3",
+    "browserify": "^13.0.1"
   }
 }

@@ -3,3 +3,6 @@
 node_modules
 bugzilla-readable-status.js
 bugzilla-readable-status-browser-demo.js
+bugzilla-readable-status-min.js
+bugzilla-readable-status-min.js.map
+

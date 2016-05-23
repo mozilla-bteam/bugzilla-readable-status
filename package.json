@@ -10,6 +10,9 @@
     "demo": "node test/fetch.js",
     "bundle-demo": "browserify test/fetch.js -o bugzilla-readable-status-browser-demo.js"
   },
+  "bin": {
+    "readable-status": "bin/readable-status.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/emceeaich/bugzilla-readable-status.git"
@@ -36,7 +39,8 @@
     "test": "test"
   },
   "dependencies": {
+    "browserify": "^13.0.1",
     "minifyify": "^7.3.3",
-    "browserify": "^13.0.1"
+    "node-fetch": "^1.5.2"
   }
 }

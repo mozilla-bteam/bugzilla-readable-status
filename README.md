@@ -31,6 +31,18 @@ And load the resulting file into your web page.
 <script src="bugzilla-readable-status.js"></script>
 ```
 
+To build a minified version of the script, 
+
+`npm run bundle-min` 
+
+and then include
+
+```
+<script src="bugzilla-readable-status-min.js"></script>
+```
+
+in your project. A corresponding source map is generated as well.
+
 ## Usage
 
 ```

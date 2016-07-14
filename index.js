@@ -123,10 +123,10 @@ Bug.prototype.getPriority = function() {
             priority = ' which should be worked on in the next release/iteration';
             break;
         case 'P3':
-            priority = ' which is a feature request';
+            priority = ' which is in the backlog of work';
             break;
         case 'P4':
-            priority = ' which is a long term backlog item';
+            priority = ' which is in the backlog (and should be changed to a P3)';
             break;
         case 'P5':
             priority = ' which will not be worked on by staff, but a patch will be accepted';

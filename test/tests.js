@@ -112,12 +112,42 @@ describe('Found in', function() {
 });
 
 describe('Priority', function() {
-    it ('Should report the earliest version the bug was found in', function() {
+    it ('Should report bugs with no priority', function() {
         readable({id: 12345, status: 'horrible', resolution: '---',
             triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
             cf_status_firefox92: 'affected', priority: '--'})
             .should.equal('HORRIBLE bug found in Firefox 91 with no priority');
     });    
+    it ('Should report bugs with P1 priorities', function() {
+        readable({id: 12345, status: 'horrible', resolution: '---',
+            triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
+            cf_status_firefox92: 'affected', priority: 'P1'})
+            .should.equal('HORRIBLE bug found in Firefox 91 which should be worked on in the current release/iteration');
+    });  
+    it ('Should report bugs with P2 priorities', function() {
+        readable({id: 12345, status: 'horrible', resolution: '---',
+            triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
+            cf_status_firefox92: 'affected', priority: 'P2'})
+            .should.equal('HORRIBLE bug found in Firefox 91 which should be worked on in the next release/iteration');
+    });  
+    it ('Should report bugs with P3 priorities', function() {
+        readable({id: 12345, status: 'horrible', resolution: '---',
+            triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
+            cf_status_firefox92: 'affected', priority: 'P3'})
+            .should.equal('HORRIBLE bug found in Firefox 91 which is in the backlog of work');
+    });  
+    it ('Should report bugs with P4 priorities', function() {
+        readable({id: 12345, status: 'horrible', resolution: '---',
+            triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
+            cf_status_firefox92: 'affected', priority: 'P4'})
+            .should.equal('HORRIBLE bug found in Firefox 91 which is in the backlog (and should be changed to a P3)');
+    });  
+    it ('Should report bugs with P5 priorities', function() {
+        readable({id: 12345, status: 'horrible', resolution: '---',
+            triage: 'TRIAGED', cf_status_firefox90: 'unaffected', cf_status_firefox91: 'affected',
+            cf_status_firefox92: 'affected', priority: 'P5'})
+            .should.equal('HORRIBLE bug found in Firefox 91 which will not be worked on by staff, but a patch will be accepted');
+    });  
 });
 
 describe('Tracking', function() {

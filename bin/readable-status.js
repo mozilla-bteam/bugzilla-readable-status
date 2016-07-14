@@ -23,7 +23,7 @@ fetch('https://bugzilla.mozilla.org/rest/bug/' + bugid).
                 if (result.error) {
                     console.log(result.error);
                 } else {
-                    console.log(result);
+                    console.log(bug.id + ': ' + bug.summary + ': ' + result);
                 }
             });
         } else {

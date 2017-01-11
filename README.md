@@ -4,7 +4,7 @@ Generate readable, english language, status messages from properties of bugs in 
 
 The module exposes a single method, `readable,` which can be called in a variety of ways:
 
-* an object whos properties correspond to a bugs properties.
+* with an object of properties correspond to a bug's properties.
 * the id of a bug (to be implemented)
 * an array of objects containing bug properties
 * an array of bug ids (to be implemented)

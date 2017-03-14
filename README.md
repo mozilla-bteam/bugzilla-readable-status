@@ -1,4 +1,6 @@
-# Bugzilla Readable Status Messages
+# Bugzilla Readable Status Messages 
+
+[![Build Status](https://travis-ci.org/mozilla/bugzilla-readable-status.svg?branch=master)](https://travis-ci.org/mozilla/bugzilla-readable-status)
 
 Generate readable, english language, status messages from properties of bugs in bugzilla.mozilla.org.
 
